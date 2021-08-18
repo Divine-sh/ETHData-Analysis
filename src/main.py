@@ -17,8 +17,8 @@ filePath2 = '../data/gasUsed.csv'
 
 if __name__ == '__main__':
     df, df_gasUsed, df_out = Initial(filePath1, filePath2)
-    for i in [34, 49, 75, 81]:
-    # for i in range(len(df)):
+    # for i in [34, 49, 75, 81]:
+    for i in range(len(df)):
         print("第%s笔交易: " % i)
         # --------------------------------------------------------------------------
         # 获取日志中第i笔交易数据
