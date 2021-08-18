@@ -12,8 +12,11 @@ pd.set_option('display.max_rows', None)
 # 设置要显示的宽度，防止轻易换行
 pd.set_option('display.width', None)
 
-filePath1 = '../data/research.csv'
-filePath2 = '../data/gasUsed.csv'
+date = "0816"
+filePath1 = '../data/' + date + '/research.csv'
+filePath2 = '../data/' + date + '/gasUsed.csv'
+outputPath = '../data/' + date + '/output.csv'
+print(outputPath)
 
 if __name__ == '__main__':
     df, df_gasUsed, df_out = Initial(filePath1, filePath2)
@@ -47,10 +50,10 @@ if __name__ == '__main__':
         # 都满足时返回对手交易的hash
         result1 = get_original_info(log_info.txHash, log_info.blockNumber)
         # print(result1)
-        if result1[0] != "yes": # 不满足三个条件，直接跳过
+        if result1[0] != "yes":  # 不满足三个条件，直接跳过
             df_out.loc[i] = [log_info.txHash, log_info.blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None]
             continue
-        else: # 满足三个条件，判断是否是抢交易
+        else:  # 满足三个条件，判断是否是抢交易
             op_hash = result1[1]
             org_res, op_res = get_token_list(log_info.txHash), get_token_list_others(op_hash)
             op_timeStamp, op_toMiner = op_res[1], op_res[2]
@@ -70,4 +73,5 @@ if __name__ == '__main__':
                 op_gasCal = (op_gasPrice * op_gasUsed + float(op_toMiner)) / op_gasUsed
                 df_out.loc[i] = [log_info.txHash, log_info.blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "yes", op_timeStamp, op_gasPrice, op_toMiner, op_gasUsed, op_gasCal]
     print(df_out)
-    df_out.to_csv("../data/output.csv", encoding="utf_8_sig")
+    # 输出到csv文件
+    df_out.to_csv(outputPath, encoding="utf_8_sig")
