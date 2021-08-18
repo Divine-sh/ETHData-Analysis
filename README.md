@@ -1,5 +1,7 @@
 ## 文件结构：
 
+### src/
+
 main.py：main文件，程序主流程
 
 initial.py：前期读取csv文件和构造df_out
@@ -7,6 +9,12 @@ initial.py：前期读取csv文件和构造df_out
 ethapi.py：包含使用eth的接口的函数
 
 seleniumcraw：包含使用selenium爬取的函数
+
+#### data/
+
+reasearch.csv、gasUsed.csv：输入文件
+
+output.csv： 输出文件
 
 ## 程序流程：
 
