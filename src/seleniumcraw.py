@@ -17,10 +17,10 @@ def get_token_list(txhash):
     driver = webdriver.Chrome(options=chromeOptions)
     driver.get(url)
     # 隐式等待
-    driver.implicitly_wait(1)
+    # driver.implicitly_wait(1)
     # 获取token列表
     lt = driver.find_elements_by_xpath("//*[@id=\"ContentPlaceHolder1_maintable\"]/div[7]/div[2]/ul/li")
-    time.sleep(0.5)
+    # time.sleep(0.5)
     token2 = []
     for i in range(0, len(lt)):
         try:
@@ -49,12 +49,12 @@ def get_token_list_others(txhash):
     driver = webdriver.Chrome(options=chromeOptions)
     driver.get(url)
     # 隐式等待
-    driver.implicitly_wait(1)
+    # driver.implicitly_wait(1)
     # 获取token列表
     # path = driver.find_element_by_xpath("//*[@id=\"ContentPlaceHolder1_maintable\"]/div[7]/div[2]/ul")
     # lt = path.find_elements_by_xpath("li")
     lt = driver.find_elements_by_xpath("//*[@id=\"ContentPlaceHolder1_maintable\"]/div[7]/div[2]/ul/li")
-    time.sleep(0.5)
+    # time.sleep(0.5)
     token2 = []
     for i in range(0, len(lt)):
         try:
