@@ -10,7 +10,9 @@ ethapi.py：包含使用eth的接口的函数
 
 seleniumcraw：包含使用selenium爬取的函数
 
-#### data/
+#### data/date
+
+date：数据对应日期
 
 reasearch.csv、gasUsed.csv：输入文件
 
