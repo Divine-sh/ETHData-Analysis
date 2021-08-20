@@ -1,9 +1,14 @@
+import logging
+
 from web3 import Web3
+from logOut import logger
 
 infura_net = 'https://mainnet.infura.io/v3/'
 project_id = '24cfcfb5548144869967d750a879ed34'
 w3 = Web3(Web3.HTTPProvider(infura_net + project_id))
-print("web3 is connected: ", w3.isConnected())
+# print("web3 is connected: ", w3.isConnected())
+connectStatus = w3.isConnected()
+logger.info(f"web3 is connected:{connectStatus}")
 
 
 def get_original_info(txhash, N):
@@ -24,23 +29,26 @@ def get_original_info(txhash, N):
     try:
         origin = w3.eth.get_transaction_receipt(txhash)
         # print(origin)
-        if origin.status == 0: # 交易失败
-            print("Transaction is failed!")
+        if origin.status == 0:  # 交易失败
+            # print("Transaction is failed!")
+            logger.info("Transaction is failed!")
             res.append("fail")
         elif origin.blockNumber != (N+2): # 不是N+2
-            print("Transaction is not N+2!")
+            # print("Transaction is not N+2!")
+            logger.info("Transaction is not N+2!")
             res.append("no")
-        else: # 符合条件
-            res.append("yes")
+        else:  # 符合条件
             # 获得对手交易hash
             op_info = w3.eth.get_transaction_by_block(origin.blockNumber, origin.transactionIndex + 1)
+            res.append("yes")
             res.append(w3.toHex(op_info.hash))
             # res.append(op_info.gasPrice)
             # op_info2 = w3.eth.get_transaction_receipt(w3.toHex(op_info.hash))
             # res.append(op_info2.gasUsed)
-    except Exception as err: # 交易不存在
-        print("%s" % err)
-        print("Transcation is not exist!")
+    except Exception as err:  # 交易不存在
+        logger.info(err)
+        # print("Transcation is not exist!")
+        logger.info("Transcation is not exist!")
         res.append("not exist")
     finally:
         return res
@@ -59,7 +67,7 @@ def get_op_info(txhash):
         op_info2 = w3.eth.get_transaction_receipt(txhash)
         res.append(op_info2.gasUsed)
     except Exception as err:
-        print("%s" % err)
+        logger.info(err)
     finally:
         return res
 
