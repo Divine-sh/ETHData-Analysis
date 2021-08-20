@@ -16,10 +16,10 @@ pd.set_option('display.width', None)
 
 logger.info(outputPath)
 
-if __name__ == '__main__':
+def data_craw(start, end):
     df, df_gasUsed, df_out = Initial(filePath1, filePath2)
     # for i in [2991, 2992]:
-    for i in range(3898, len(df)):
+    for i in range(start, end):
     # for i in range(len(df)):
         # print("第%s笔交易: " % i)
         logger.info("第%s笔交易: " % i)
@@ -60,7 +60,6 @@ if __name__ == '__main__':
         # print(result1)
         if result1[0] != "yes":  # 不满足三个条件，直接跳过
             df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None]
-            continue
         else:  # 满足三个条件，判断是否是抢交易
             op_hash = result1[1]
             org_res, op_res = get_token_list(my_txHash), get_token_list_others(op_hash)
@@ -84,7 +83,13 @@ if __name__ == '__main__':
                 # print("op_gasPrice:", op_gasPrice, "op_gasUsed:", op_gasUsed, "op_toMiner:", op_toMiner)
                 op_gasCal = (op_gasPrice * op_gasUsed + float(op_toMiner)) / op_gasUsed
                 df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "yes", op_timeStamp, op_gasPrice, op_toMiner, op_gasUsed, op_gasCal]
-        df_out.to_csv(outputPath, encoding="utf_8_sig")
+        # df_out.to_csv(outputPath, encoding="utf_8_sig")
     print(df_out)
     # 输出到csv文件
-    df_out.to_csv(outputPath, encoding="utf_8_sig")
+    df_out.to_csv(outputPath, encoding="utf_8_sig", mode='a', header=False) #
+
+
+if __name__ == '__main__':
+    start = 1782
+    end = 1808
+    data_craw(start, end)
