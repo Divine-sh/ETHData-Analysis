@@ -8,7 +8,11 @@ initial.py：前期读取csv文件和构造df_out
 
 ethapi.py：包含使用eth的接口的函数
 
-seleniumcraw：包含使用selenium爬取的函数
+seleniumcraw.py：包含使用selenium爬取的函数
+
+logOut.py：包含提供日志输出的logger实例
+
+logging.conf：logging模块的配置文件
 
 #### data/date
 
@@ -16,7 +20,7 @@ date：数据对应日期
 
 reasearch.csv、gasUsed.csv：输入文件
 
-output.csv： 输出文件
+output.csv： 输出文件 (输入数据很大时可能切片输出1,2,3,4,5...)
 
 ## 程序流程：
 
