@@ -2233,7 +2233,8 @@ console.error: services.settings:
 console.error: services.settings: 
   Message: TypeError: NetworkError when attempting to fetch resource.
 1629455751117	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: timeout
-R_FAILURE) [nsIUserIdleService.removeIdleObserver]
+Exiting due to channel error.
+removeIdleObserver]
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
@@ -2256,7 +2257,7 @@ console.error: services.settings:
   main/doh-config local data was corrupted
 console.warn: services.settings: main/doh-config Signature verified failed. Retry from scratch
 1629455852837	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
-l be ignored for this session
+Exiting due to channel error.
 1629455379778	Marionette	INFO	Stopped listening on port 13188
 JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
 
