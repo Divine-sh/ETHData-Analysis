@@ -4,7 +4,7 @@ import pandas as pd
 import json
 import time
 from ethapi import get_original_info, get_op_info
-from seleniumcraw import get_token_list, get_token_list_others
+from seleniumcraw import get_toMiner
 from logOut import outputPath, filePath1, filePath2, logger
 
 # 显示所有列
@@ -15,6 +15,7 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.width', None)
 
 logger.info(outputPath)
+
 
 def data_craw(start, end):
     df, df_gasUsed, df_out = Initial(filePath1, filePath2)
@@ -58,13 +59,11 @@ def data_craw(start, end):
         # 都满足时返回对手交易的hash
         result1 = get_original_info(my_txHash, my_blockNumber)
         # print(result1)
-        if result1[0] != "yes":  # 不满足三个条件，直接跳过
-            df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None]
+        if result1[0] != "N+1" and result1[0] != "N+2":  # 不满足三个条件，直接跳过
+            df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None, None]
         else:  # 满足三个条件，判断是否是抢交易
             op_hash = result1[1]
-            org_res, op_res = get_token_list(my_txHash), get_token_list_others(op_hash)
-            op_timeStamp, op_toMiner = op_res[1], op_res[2]
-            token1, token2 = org_res[0], op_res[0]
+            token1, token2 = result1[2], result1[3]
             # print("token1:", token1, "token2:", token2)
             logger.info(f"token1:{token1}")
             logger.info(f"token2:{token2}")
@@ -73,23 +72,22 @@ def data_craw(start, end):
             if not common:  # token列表交集为空，不是抢机会
                 # print("Not opponent!")
                 logger.info("Not opponent!")
-                df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None]
+                df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None, None]
             else:  # token列表交集不为空，是抢机会
                 # print("Opponent!")
                 logger.info("Opponent!")
                 op_info = get_op_info(op_hash)
-                op_gasPrice, op_gasUsed = op_info[0], op_info[1]
-                # op_gasPrice, op_gasUsed = result1[2], result1[3]
-                # print("op_gasPrice:", op_gasPrice, "op_gasUsed:", op_gasUsed, "op_toMiner:", op_toMiner)
+                op_gasPrice, op_gasUsed, op_time = op_info[0], op_info[1], op_info[2]
+                op_toMiner = get_toMiner(op_hash)[0]
                 op_gasCal = (op_gasPrice * op_gasUsed + float(op_toMiner)) / op_gasUsed
-                df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "yes", op_timeStamp, op_gasPrice, op_toMiner, op_gasUsed, op_gasCal]
+                df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "yes", op_hash, op_time, op_gasPrice, op_toMiner, op_gasUsed, op_gasCal]
         # df_out.to_csv(outputPath, encoding="utf_8_sig")
     print(df_out)
     # 输出到csv文件
-    df_out.to_csv(outputPath, encoding="utf_8_sig", mode='a', header=False) #
+    df_out.to_csv(outputPath, encoding="utf_8_sig", mode='a', header=True)  # header=False
 
 
 if __name__ == '__main__':
-    start = 1782
-    end = 1808
+    start = 0
+    end = 50
     data_craw(start, end)

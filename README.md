@@ -41,13 +41,15 @@ output.csv： 输出文件 (输入数据很大时可能切片输出1,2,3,4,5...)
 
 ​		②交易是否成功
 
-​		③是否为N+2
+​		③是否为N+2 或 N+1
 
-​	以上条件都成立时，通过
+​	以上条件都成立时，
 
-​	**web3.eth.get_transaction_by_block(blockNumber,Index)**
+​	① 通过**web3.eth.get_transaction_by_block(blockNumber,Index)**得到可能存在的对手的交易hash
 
-​	得到可能存在的对手的交易hash
+​	② 通过logs获得token1和token2
+
+​	③ 获得op_timeStamp(和block的timeStamp一致，因为是同一时间打包)
 
 2.通过原交易和对手交易的hash，用selenium爬取token列表（对于对手交易，顺便获取op_timeStamp和op_toMiner），判断是否为抢交易：
 

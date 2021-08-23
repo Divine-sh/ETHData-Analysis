@@ -132,6 +132,33 @@ def get_token_list_others(txhash):
     return res
 
 
+def get_toMiner(txhash):
+    # 根据交易的hash，使用selenium爬取交易的toMiner
+    # 返回值: res: list
+    # res[0]: toMiner
+    res = []
+    url = base_url + txhash
+    # 初始化一个浏览器
+    driver = webdriver.Firefox(firefox_profile, options=firefox_options)
+    # driver = webdriver.Chrome(options=chrome_options)
+    driver.get(url)
+    # 隐式等待
+    driver.implicitly_wait(2)
+
+    # 获取toMiner
+    try:
+        infs2 = driver.find_element_by_xpath("//*[@id=\"ContentPlaceHolder1_maintable\"]/div[6]/div[2]/ul/li[1]/div")
+        time.sleep(0.5)
+        op_toMiner = infs2.text.split(" ")[3]
+    except Exception as err:
+        op_toMiner = 0
+        logger.info(err)
+    res.append(op_toMiner)
+    driver.close()
+    return res
+
+
+
 if __name__ == '__main__':
     txhash = '0xda6cf3e946e3ddedc4c58307de36cc5f50ccc7ada6e3e57af1584026339959f9'
     print(get_token_list(txhash))
