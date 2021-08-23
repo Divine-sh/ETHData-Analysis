@@ -44,16 +44,15 @@ def get_original_info(txhash, N):
             logger.info("Transaction is not N+1 or N+2!")
             res.append("no")
         else:  # 符合条件
+            # 获得对手交易hash
+            op_info = w3.eth.get_transaction_by_block(origin.blockNumber, origin.transactionIndex + 1)
+            op_txhash = w3.toHex(op_info.hash)
             if org_blockNumber == (N+2):
                 logger.info("Transaction is N+2!")
                 res.append("N+2")
             else:
                 logger.info("Transaction is N+1!")
                 res.append("N+1")
-
-            # 获得对手交易hash
-            op_info = w3.eth.get_transaction_by_block(origin.blockNumber, origin.transactionIndex + 1)
-            op_txhash = w3.toHex(op_info.hash)
             res.append(op_txhash)
 
             # 通过日志获得token1
@@ -72,7 +71,6 @@ def get_original_info(txhash, N):
 
     except Exception as err:  # 交易不存在
         logger.info(err)
-        # print("Transcation is not exist!")
         logger.info("Transcation is not exist!")
         res.append("not exist")
     finally:

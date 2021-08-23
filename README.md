@@ -49,11 +49,15 @@ output.csv： 输出文件 (输入数据很大时可能切片输出1,2,3,4,5...)
 
 ​	② 通过logs获得token1和token2
 
-​	③ 获得op_timeStamp(和block的timeStamp一致，因为是同一时间打包)
+2.判断是否为抢交易：
 
-2.通过原交易和对手交易的hash，用selenium爬取token列表（对于对手交易，顺便获取op_timeStamp和op_toMiner），判断是否为抢交易：
+​	如果是抢交易，
 
-​	若是抢交易，再通过eth的api获取对手交易的gasPrice，对手gasUsed，计算对手折算
+​	① 通过eth的api获取对手交易的gasPrice，对手gasUsed，获得op_timeStamp(和block的timeStamp一致，因为是同一时间打包)
+
+​	② 通过对手交易的hash，用selenium爬取op_toMiner
+
+​	③ 计算对手折算 	
 
 3.根据1,2的条件满足情况向df_out添加一行
 

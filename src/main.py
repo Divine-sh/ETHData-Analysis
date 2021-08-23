@@ -34,6 +34,7 @@ def data_craw(start, end):
         # print(type(message))
         # 交易hash
         my_txHash = log_info.txHash
+        logger.info(f"日志交易的hash: {my_txHash}")
         # 块号
         my_blockNumber = log_info.blockNumber
         # 格式化我方时间时间戳
@@ -79,15 +80,17 @@ def data_craw(start, end):
                 op_info = get_op_info(op_hash)
                 op_gasPrice, op_gasUsed, op_time = op_info[0], op_info[1], op_info[2]
                 op_toMiner = get_toMiner(op_hash)[0]
+                logger.info(f"对手toMiner: {op_toMiner}")
                 op_gasCal = (op_gasPrice * op_gasUsed + float(op_toMiner)) / op_gasUsed
                 df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "yes", op_hash, op_time, op_gasPrice, op_toMiner, op_gasUsed, op_gasCal]
-        # df_out.to_csv(outputPath, encoding="utf_8_sig")
     print(df_out)
     # 输出到csv文件
-    df_out.to_csv(outputPath, encoding="utf_8_sig", mode='a', header=True)  # header=False
+    df_out.to_csv(outputPath, encoding="utf_8_sig", mode='a', header=False)  # header=False
 
 
 if __name__ == '__main__':
-    start = 0
-    end = 50
-    data_craw(start, end)
+    start = 1000
+    while start < 4200:
+        data_craw(start, start+50)
+        start += 50
+

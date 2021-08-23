@@ -4,7 +4,7 @@ import logging.config
 date = "0816"
 filePath1 = '../data/' + date + '/research.csv'
 filePath2 = '../data/' + date + '/gasUsed.csv'
-outputPath = '../data/' + date + '/output_n+1.csv'
+outputPath = '../data/' + date + '/output2.csv'
 logOutPath = '../data/' + date + '/logOut.log'
 
 

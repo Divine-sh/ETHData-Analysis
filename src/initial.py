@@ -8,8 +8,13 @@ def Initial(filepath1, filepath2):
     # 读取csv文件
     df = pd.read_csv(filepath1)
     # print("The amount of transaction is: ", len(df))
-    l = len(df)
-    logger.info(f"The amount of transaction is: {l}")
+    logger.info(f"The initial amount of transaction is: {len(df)}")
+    # 去重
+    # 去重列，按这些列进行去重
+    # 保存第一条重复数据
+    df.drop_duplicates(subset=['txHash'],  keep='first', inplace=True)
+    logger.info(f"The de-duplication amount of transaction is: {len(df)}")
+
     df_gasUsed = pd.read_csv(filepath2)
     c1 = ("txHash", "blockNumber", "我方time", "我方gasPrice", "我方toMiner", "我方gasUsed", "我方折算")
     c2 = ("是否N+2", "是否抢机会", "对方txHash", "对方botTime", "对方gasPrice", "对方toMiner", "对方gasUsed", "对方折算")
@@ -18,4 +23,4 @@ def Initial(filepath1, filepath2):
 
 
 if __name__ == '__main__':
-    Initial('../data/research.csv', '../data/gasUsed.csv')
+    Initial('../data/0816/research.csv', '../data/0816/gasUsed.csv')
