@@ -64,6 +64,7 @@ def data_craw(start, end):
             df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "no", None, None, None, None, None, None]
         else:  # 满足三个条件，判断是否是抢交易
             op_hash = result1[1]
+            logger.info(f"对手交易hash: {op_hash}")
             token1, token2 = result1[2], result1[3]
             # print("token1:", token1, "token2:", token2)
             logger.info(f"token1:{token1}")
@@ -80,6 +81,7 @@ def data_craw(start, end):
                 op_info = get_op_info(op_hash)
                 op_gasPrice, op_gasUsed, op_time = op_info[0], op_info[1], op_info[2]
                 op_toMiner = get_toMiner(op_hash)[0]
+                op_toMiner = str(op_toMiner).replace(",", "")
                 logger.info(f"对手toMiner: {op_toMiner}")
                 op_gasCal = (op_gasPrice * op_gasUsed + float(op_toMiner)) / op_gasUsed
                 df_out.loc[i] = [my_txHash, my_blockNumber, my_time, my_gasPrice, my_toMiner, my_gasUsed, my_gasCal, result1[0], "yes", op_hash, op_time, op_gasPrice, op_toMiner, op_gasUsed, op_gasCal]
@@ -89,8 +91,9 @@ def data_craw(start, end):
 
 
 if __name__ == '__main__':
-    start = 1000
-    while start < 4200:
-        data_craw(start, start+50)
-        start += 50
+    data_craw(4270, 4271)
+    # start = 3800
+    # while start < 4200:
+    #     data_craw(start, start+50)
+    #     start += 50
 

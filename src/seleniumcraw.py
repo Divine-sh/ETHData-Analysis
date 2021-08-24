@@ -22,7 +22,7 @@ firefox_profile.set_preference('network.proxy.ssl_port', 7890)
 firefox_profile.update_preferences()
 # 创建一个options实例
 firefox_options = Options()
-# firefox_options.add_argument('--headless')
+firefox_options.add_argument('--headless')
 # firefox_options.add_argument('--disable-gpu')
 # firefox_options.add_argument('log-level=3')
 
