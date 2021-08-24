@@ -20,7 +20,7 @@ date：数据对应日期
 
 reasearch.csv、gasUsed.csv：输入文件
 
-output.csv： 输出文件 (输入数据很大时可能切片输出1,2,3,4,5...)
+output.csv： 输出文件 
 
 ## 程序流程：
 
