@@ -22977,3 +22977,5 @@
 2021-08-24 14:11:29,253 |     INFO | initial.py [line:11] => The initial amount of transaction is: 6963
 2021-08-24 14:11:29,259 |     INFO | initial.py [line:16] => The de-duplication amount of transaction is: 4270
 2021-08-24 14:11:29,269 |     INFO | main.py [line:26] => µÚ4270±Ê½»Ò×: 
+2021-08-24 14:29:21,418 |     INFO | initial.py [line:11] => The initial amount of transaction is: 6963
+2021-08-24 14:29:21,422 |     INFO | initial.py [line:16] => The de-duplication amount of transaction is: 4270
