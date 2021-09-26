@@ -92,7 +92,7 @@ def get_op_info(txhash):
         op_info2 = w3.eth.get_transaction_receipt(txhash)
         res.append(op_info2.gasUsed)
         op_info3 = w3.eth.get_block(op_info2.blockNumber)
-        # 将时间戳转换为时间元祖
+        # 将时间戳转换为时间元组
         timeArray = time.localtime(op_info3.timestamp)
         # 格式化时间戳
         op_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)

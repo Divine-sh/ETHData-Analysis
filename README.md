@@ -97,9 +97,33 @@ output.csv： 输出文件
 
 1. 通过 w3 获取 trx logs
    1. https://cn.etherscan.com/tx/0xd4aea8dfce56d9f4946ac3b8201cc24819b8163619428a6d36df25e2548e4fac#eventlog
-   2. 判断是否为 WETH
+   
+   ```python
+   trx_rep = w3.eth.get_transaction_receipt(tx)
+   trx_log = trx_rep.logs
+   {
+       'blockHash': HexBytes('0xdb749ad864d5e2e842d44b846e73f047ef93fa7e18a399682a50213be06c1b59'), 
+       'blockNumber': 13230393, 
+       'contractAddress': None, 
+       'cumulativeGasUsed': 854679, 
+       'effectiveGasPrice': 34301104282, 
+       'from': '0x98313Ec873eA0Ca63623C1EaBB4EdD2129F73EF2', 
+       'gasUsed': 174865, 
+       'logs': [], 
+       'logsBloom': , 
+       'status': 1, 
+       'to': '0xE592427A0AEce92De3Edee1F18E0157C05861564', 
+       'transactionHash': HexBytes('0x000035d6403e5e32384a79708f5ab59a370a00061ab4606e6cb599439d2d45e7'), 
+       'transactionIndex': 6, 
+       'type': '0x2'
+   }
+   ```
+   
+   
+   
+   1. 判断是否为 WETH
       1. address 为 '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-   3. 判断是否为 Transfer 转账事件
+   2. 判断是否为 Transfer 转账事件
       1. topics[0] 为 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 
 
@@ -107,7 +131,7 @@ output.csv： 输出文件
 ##### 4.能够计算每笔交易给矿工的利润
 
 1. [innerTokens]
-   1. Profit = innerToken[-1].balance - inerToken[0].balance
+   1. Profit = innerToken[-1].balance - innerToken[0].balance（开始和最后WETH的价差）
    2. Cost = gasFee + transferToMine
       1. gasFee = gasUsed * gasPrice (链上数据)
       2. transferToMIner = coinbase_transfer（csv中有对应数据）
@@ -117,8 +141,18 @@ output.csv： 输出文件
 
 ##### 5.按照利润排序，取总利润10
 
+​	按照合约地址group by得到netProfitSum，然后排序
+
 
 
 ##### 6.最后输出表格
 
 1. contractAddr, dtStr, trxCnt, ProfitSum, netProfitSum
+
+   contractAddr-->csv 中的 toAddr
+
+   dtStr-->csv 中的 Timestamp 格式年月日
+
+   trxCnt：统一toAddress对应交易数量
+
+2. 把所有的套利交易输出到一个单独表arbitrageTrx
