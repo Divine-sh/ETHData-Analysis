@@ -141,7 +141,7 @@ output.csv： 输出文件
 
 ##### 5.按照利润排序，取总利润10
 
-​	按照合约地址group by得到netProfitSum，然后排序
+​	按照合约地址group by得到trxCnt, ProfitSum，netProfitSum，然后按照netProfitSum排序
 
 
 
