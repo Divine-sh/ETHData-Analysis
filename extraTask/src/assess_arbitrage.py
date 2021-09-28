@@ -90,8 +90,8 @@ if __name__ == '__main__':
             topic = log.topics[0].hex()
             if topic == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef':
                 tsf_list.append(log)
-        # print(int(tsf_list[0].data, 16))
-        # print(int(tsf_list[-1].data, 16))
+        # print(int(tsf_list[0].input, 16))
+        # print(int(tsf_list[-1].input, 16))
         Profit = int(tsf_list[-1].data, 16) - int(tsf_list[0].data, 16)
         print("利润", Profit)
         NetProfit = Profit - Cost

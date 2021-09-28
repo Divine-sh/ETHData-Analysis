@@ -23,4 +23,4 @@ def Initial(filepath1, filepath2):
 
 
 if __name__ == '__main__':
-    Initial('../data/0816/research.csv', '../data/0816/gasUsed.csv')
+    Initial('../input/0816/research.csv', '../input/0816/gasUsed.csv')

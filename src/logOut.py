@@ -2,10 +2,10 @@ import logging
 import logging.config
 
 date = "0816"
-filePath1 = '../data/' + date + '/research.csv'
-filePath2 = '../data/' + date + '/gasUsed.csv'
-outputPath = '../data/' + date + '/output2.csv'
-logOutPath = '../data/' + date + '/logOut.log'
+filePath1 = '../input/' + date + '/research.csv'
+filePath2 = '../input/' + date + '/gasUsed.csv'
+outputPath = '../input/' + date + '/output2.csv'
+logOutPath = '../input/' + date + '/logOut.log'
 
 
 # 1.logging格式的配置文件
