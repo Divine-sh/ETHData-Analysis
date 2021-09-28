@@ -1,15 +1,18 @@
 import pandas as pd
+import datetime
 
 if __name__ == '__main__':
-    df = pd.read_csv('dataBeforeGroupBy.csv', dtype={"coinbase_transfer": str, "miner_reward": str, "NetProfit": float, "Profit": float})
+    df = pd.read_csv('dataBeforeGroupBy.csv',
+                     dtype={"coinbase_transfer": str, "miner_reward": str, "NetProfit": float, "Profit": float, "finish_time": str})
+
     df.drop(axis=1, inplace=True, labels='index')
-    print(type(df.iloc[1, 14]))
-    # df0 = df[['to_address', 'finish_time']]
-    # df0.columns = df0.columns.str.replace('finish_time', 'time')
-    df1 = df.groupby(['to_address'])['NetProfit'].sum().reset_index(name="NetProfitSum")
-    df2 = df.groupby(['to_address'])['Profit'].sum().reset_index(name="ProfitSum")
-    df3 = df.groupby(['to_address'])['transaction_hash'].count().reset_index(name="trxCnt")
-    df4 = pd.merge(df1, df2, on='to_address')
-    df5 = pd.merge(df3, df4, on='to_address')
-    df5 = df5[df5['trxCnt'] >= 24]
-    df5.sort_values(by="NetProfitSum", ascending=False).head(10).to_csv("dataAfterGroupBy.csv")
+    for i in range(0, len(df)):
+        df.iloc[i, 11] = datetime.datetime.strptime(df.iloc[i, 11], "%Y-%m-%d  %H:%M")
+
+    df1 = df.groupby(['to_address', pd.Grouper(freq='1D', key='finish_time')])[["NetProfit", "Profit"]].sum()
+    df2 = df.groupby(['to_address', pd.Grouper(freq='1D', key='finish_time')])["transaction_hash"].count()
+    df3 = pd.merge(df1, df2, on=['to_address', 'finish_time'])
+    df3.rename(columns={'finish_time': 'time', 'NetProfit': 'NetProfitSum',
+                        'Profit': 'ProfitSum', 'transaction_hash': 'txCnt'}, inplace=True)
+    df3 = df3[df3['txCnt'] >= 24]
+    df3.sort_values(by='NetProfitSum', ascending=False).head(10).to_csv("dataAfterGroupBy.csv")
