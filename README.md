@@ -216,3 +216,15 @@ select * from block_info limit 50
 # Web3 访问
 
 使用dataframe的describe求分位数、分位点
+
+
+
+### 逻辑流程
+
+#### 1.从database中获取block info
+
+#### 2.通过flashpoint api得到fb交易，找出其中gasPrice最低的值
+
+#### 3.通过web3获得非fb交易，通过describe求分位点
+
+#### 4.判断fb交易的最低gasPrice在非fb交易的gasPrice中的分位数
