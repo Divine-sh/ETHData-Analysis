@@ -228,3 +228,28 @@ select * from block_info limit 50
 #### 3.通过web3获得非fb交易，通过describe求分位点
 
 #### 4.判断fb交易的最低gasPrice在非fb交易的gasPrice中的分位数
+
+
+
+# Steps
+
+- 选取 最近1k个block
+
+
+
+- 数据准备-非FB部分，
+  - 增加一列，等效 GasPrice
+    - (TransactionFee-BurnFee)/GasUsed
+      - TransactionFee=GasPrice*GasUsed
+      - BurnFee=Block.baseGasPrice* GasUsed
+
+
+
+- 分析-调研fb包含的交易是否为当前block 等效gasprice最高的交易。
+  - 非fb内部是否是GasPrice 降序排列
+  - fb 部分的交易的等效gp的最小值  是否高于 非 fb 交易部分的最大值
+
+
+
+- 分析-是否存在一些高优账户的等效gasprice不是最高，但也包含进入fb交易的。
+  - 把上面分析过程中 步骤3 的异常值挑出来
