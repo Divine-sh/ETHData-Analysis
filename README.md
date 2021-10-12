@@ -63,7 +63,7 @@ output.csv： 输出文件
 
 ## 附加任务：
 
-#### 分析任务-评估 Dex Swap 前十套利者收益情况
+### 一、分析任务：评估 Dex Swap 前十套利者收益情况
 
 ### 背景：
 
@@ -156,3 +156,63 @@ output.csv： 输出文件
    trxCnt：统一toAddress对应交易数量
 
 2. 把所有的套利交易输出到一个单独表arbitrageTrx
+
+
+
+### 二、分析任务：Flashbot-GasPrice-调研
+
+
+
+## 目的：
+
+调研fb包含的交易是否为当前block 等效gasprice最高的交易。
+
+是否存在一些高优账户的等效gasprice不是最高，但也包含进入fb交易的。
+
+
+
+## 手段：
+
+调研fb交易最低gas price，在对应block里非fb交易中gas price分位数。
+
+##### 举例
+
+某block，0-5 的6笔交易为fb交易，6-200的交易为非fb交易。
+
+计算position5的等效gas price 在position 6-200的gas price的分位数。
+
+
+
+# 开发资源
+
+
+
+## Flashbot API
+
+https://blocks.flashbots.net/v1/blocks?block_number=13383860
+
+curl --location --request GET 'https://blocks.flashbots.net/v1/blocks?block_number=13383860'
+
+
+
+## MySQL
+
+### db
+
+mysql -h rm-2zetcrfz7vg3ay7do125030pm.mysql.rds.aliyuncs.com -u r_fb_buddels_users  -D fb_buddles -p
+
+密码：EqgJoRLguk2CKrMZ
+
+
+
+### query-包含 fb 的 block
+
+```
+select * from block_info limit 50
+```
+
+
+
+# Web3 访问
+
+使用dataframe的describe求分位数、分位点
