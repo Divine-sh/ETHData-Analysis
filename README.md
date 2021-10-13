@@ -237,6 +237,12 @@ select * from block_info limit 50
 
 
 
+- 数据准备-FB部分
+  - 增加一列，Budle GasPrice
+    - sum([ x.gasPrice * x.gasUsed for x in buld]) / sum([x.gasUsed])
+
+
+
 - 数据准备-非FB部分，
   - 增加一列，等效 GasPrice
     - (TransactionFee-BurnFee)/GasUsed
