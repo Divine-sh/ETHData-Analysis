@@ -86,7 +86,7 @@ def analysis_one_block(block_num, fbtx_num):
     # 判断 fb 部分的交易的等效gp的最小值 是否高于 非 fb 交易部分的最大值
     if fb_lastBuddle_price >= nfb_max:
         return [[block_num, block_gas_price/1e9, fb_min/1e9, fb_min_bubbleIndex,
-                fb_lastBuddle_price/1e9, 0, 0,
+                fb_lastBuddle_price/1e9, 0, '0%',
                 bubble_num, fbtx_num, nfb_max/1e9, nfb_max_txhash, nfb_max_blockIndex,
                 0, None], fb_data]
     else:
@@ -94,7 +94,7 @@ def analysis_one_block(block_num, fbtx_num):
         nfep = not_fb_df['equ_price'].tolist()
         nfb_num = len(nfep)
         nfep.append(fb_lastBuddle_price)
-        nfep.sort()
+        nfep.sort(reverse=True)
         fb_lastBuddle_position = nfep.index(fb_lastBuddle_price)
         fb_lastBuddle_quantile = '%.4f%%' % (fb_lastBuddle_position/nfb_num*100)
         print(fb_lastBuddle_position, nfb_num, fb_lastBuddle_quantile)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
                                    'fb_lastBuddle_price', 'fb_lastBuddle_position', 'fb_lastBuddle_quantile',
                                    'buddle_num', 'fbtx_num', 'nfb_max_price', 'nfb_max_txhash', 'nfb_max_blockIndex',
                                    'exist_high_priority', 'high_priority_trx'])
-    block_info = getBlockInfo(5)
+    block_info = getBlockInfo(100)
     for i in range(len(block_info)):
         print(f"\n第{i}个block:")
         res = analysis_one_block(int(block_info[i][0]), int(block_info[i][1]))
