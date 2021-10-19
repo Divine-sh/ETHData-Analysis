@@ -1,6 +1,10 @@
 import pymysql
 import requests
 import json
+date_year = 2021
+date_month = 10
+date_day = 12
+
 
 # 从db中获取block信息
 def getBlockInfo(num):
@@ -12,7 +16,8 @@ def getBlockInfo(num):
                          db='fb_buddles')
     cur = db.cursor()
     # 筛选block
-    sql = "select block_number,transaction_num from block_info where finish_time between '2021-10-12 00:00:00' and '2021-10-13 00:00:00' limit " + str(num)
+    sql = f"select block_number,transaction_num from block_info where finish_time between \'{date_year}-{date_month}-{date_day} 00:00:00\' and \'{date_year}-{date_month}-{date_day + 1} 00:00:00\' limit " + str(num)
+    print(sql)
     row_count = cur.execute(sql)
     print("length: ", row_count)
     # 将tuple转换为list存入block_info

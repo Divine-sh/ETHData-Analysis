@@ -253,7 +253,7 @@ select * from block_info limit 50
 
 - 分析-调研fb包含的交易是否为当前block 等效gasprice最高的交易。
   - 非fb内部是否是GasPrice 降序排列
-  - fb 部分的交易的等效gp的最小值  是否高于 非 fb 交易部分的最大值
+  - fb 部分的交易的等效gp的最小值  是否高于 非 fb 交易部分的最大值（最小值改为fb交易的最后一个buddle的gasPrice【有些gasPrice为0的fb交易会放到前面】）
 
 
 

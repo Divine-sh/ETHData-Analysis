@@ -18,5 +18,7 @@ print(df)
 # 采用.loc的方法进行
 df.loc[0] = ['cat', 3]  # 其中loc[]中需要加入的是插入地方dataframe的索引，默认是整数型
 # 也可采用诸如df.loc['a'] = ['123',30]的形式
-df.loc['a'] = ['123',30]
+df.loc['a'] = ['123', 30]
 print(df)
+
+print(1e9)
