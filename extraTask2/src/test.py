@@ -27,3 +27,4 @@ print(list.index(5))
 list.sort(reverse=True)
 print(list)
 print(list.index(5))
+

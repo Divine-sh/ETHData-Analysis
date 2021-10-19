@@ -14,16 +14,14 @@ def draw_hist(myList, Title, Xlabel, Ylabel, Xmin, Xmax, Ymin, Ymax):
 
 
 if __name__ == '__main__':
-    data = pd.read_csv('../output/output_2021_10_12.csv')
-    print(data['fb_lastBuddle_quantile'])
-    quantile_list = []
-    z_num = 0
-    for v in data['fb_lastBuddle_quantile']:
-        print(float(v.strip('%')))
-        x = float(v.strip('%'))
-        quantile_list.append(x)
-        if -0.0001 < x < 0.0001:
-            z_num = z_num + 1
-    print(z_num)
-
-    draw_hist(quantile_list, 'quantile-num', 'quantile', 'num', 0, 100, 0, 20)
+    # data = pd.read_csv('../output/output_2021_10_12.csv')
+    # print(data['fb_lastBuddle_quantile'])
+    # quantile_list = []
+    #
+    # for v in data['fb_lastBuddle_quantile']:
+    #     print(float(v.strip('%')))
+    #     x = float(v.strip('%'))
+    #     quantile_list.append(x)
+    #
+    #
+    # draw_hist(quantile_list, 'quantile-num', 'quantile', 'num', 0, 100, 0, 15)
