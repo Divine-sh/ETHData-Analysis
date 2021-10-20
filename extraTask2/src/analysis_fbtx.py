@@ -18,10 +18,11 @@ def analysis_one_block(block_num, fbtx_num, block_gas_price):
     # print(fb_data)
 
     df = pd.DataFrame(columns=('tx_index', 'tx_hash', 'gas_price', 'equ_price'))
-    block_len = len(w3.eth.get_block(block_num).transactions)
+    w3df = w3.eth.get_block(block_num)
+    block_len = len(w3df.transactions)
     # print(w3.eth.get_block(block_num).transactions)
     print(f"block_len: {block_len}")
-    baseGP = w3.eth.get_block(block_num).baseFeePerGas
+    baseGP = w3df.baseFeePerGas
 
     # 计算所有交易的等价gasPrice
     for i in range(block_len):
@@ -30,6 +31,7 @@ def analysis_one_block(block_num, fbtx_num, block_gas_price):
         equ_price = res1.gasPrice - baseGP
         # print(equ_price)
         df.loc[i] = [i, res1.hash.hex(), res1.gasPrice, equ_price]
+    print("The gasPrice calculation is completed!")
 
     # fb交易存在buddle交易，及多笔交易互为伙伴交易，这时候这些交易需要计算一个buddle_gas_price
     # 计算fb交易的buddle_price并计算fb的最小等效gasPrice

@@ -24,4 +24,4 @@ if __name__ == '__main__':
         quantile_list.append(x)
 
 
-    draw_hist(quantile_list, 'quantile-num', 'quantile', 'num', 0, 100, 0, 15)
+    draw_hist(quantile_list, 'quantile-num', 'quantile', 'num', 0, 100, 0, 600)
